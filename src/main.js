@@ -52,6 +52,7 @@ function init() {
 
   map.on("load", function() {
     appState.angle = map.getBearing();
+    appState.pitch = map.getPitch();
   });
 
   map.dragRotate.disable();

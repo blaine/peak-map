@@ -57,43 +57,50 @@
             <div class='row'>
               <div class='col'>Line density</div>
               <div class='col c-2'>
-                <input type="range" min="1" max="100" step="1" v-model="lineDensity"> 
+                <input type="range" min="1" max="100" step="1" v-model="lineDensity">
                 <input type='number' :step='1' v-model='lineDensity'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='1' max='100'>
               </div>
             </div>
             <div class='row'>
               <div class='col'>Ocean level</div>
               <div class='col c-2'>
-                <input type='range' min='-20' max='500' step='1' v-model='oceanLevel'> 
+                <input type='range' min='-20' max='500' step='1' v-model='oceanLevel'>
                 <input type='number' :step='1' v-model='oceanLevel' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' max='500' min='-20'>
               </div>
             </div>
             <div class='row'>
               <div class='col'>Smooth steps</div>
               <div class='col c-2'>
-                <input type='range' min='1' max='12' step='1' v-model='smoothSteps'> 
+                <input type='range' min='1' max='12' step='1' v-model='smoothSteps'>
                 <input type='number' :step='1' v-model='smoothSteps'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='1' max='12'>
               </div>
             </div>
             <div class='row'>
               <div class='col'>Line width</div>
               <div class='col c-2'>
-                <input type='range' min='0.1' max='5' step='0.1' v-model='lineWidth'> 
+                <input type='range' min='0.1' max='5' step='0.1' v-model='lineWidth'>
                 <input type='number' :step='0.1' v-model='lineWidth'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='0.1' max='5'>
               </div>
             </div>
             <div class='row'>
               <div class='col'>Overlay opacity</div>
               <div class='col c-2'>
-                <input type="range" min="1" max="100" step="1" v-model="mapOpacity"> 
+                <input type="range" min="1" max="100" step="1" v-model="mapOpacity">
                 <input type='number' :step='1' v-model='mapOpacity'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='1' max='100'>
               </div>
             </div>
             <div class='row'>
               <div class='col'>Map Angle</div>
               <div class='col c-2'>
-                <input type="range" min="-180" max="180" step="1" v-model="angle"> 
+                <input type="range" min="-180" max="180" step="1" v-model="angle">
                 <input type='number' :step='1' v-model='angle'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='-180' max='180'>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col'>Map Pitch</div>
+              <div class='col c-2'>
+                <input type="range" min="0" max="90" step="1" v-model="pitch">
+                <input type='number' :step='1' v-model='pitch'  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" min='-180' max='180'>
               </div>
             </div>
           </div>
@@ -231,6 +238,10 @@ export default {
     angle(newValue) {
       let angle = Number.parseFloat(newValue);
       map.setBearing(angle);
+    },
+    pitch(newValue) {
+      let pitch = Number.parseFloat(newValue);
+      map.setPitch(pitch);
     },
     lineDensity() {
       this.redraw();

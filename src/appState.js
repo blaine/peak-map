@@ -2,6 +2,7 @@ import tinycolor from 'tinycolor2';
 
 const appState = {
   angle: 0,
+  pitch: 0,
   currentState: 'intro',
   lineDensity: 28,
   lineWidth: 1,
