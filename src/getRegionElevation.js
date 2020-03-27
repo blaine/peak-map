@@ -68,6 +68,9 @@ export default function getRegionElevation(map, appState, doneCallback) {
       // const horizon = map.transform.pointLocation({x: 0, y: windowHeight});
       // const horizonDist = rhumbDistance([origin.lat, origin.lng], [horizon.lat, horizon.lng]);
 
+      const heightAdjustAmount = Math.sin(map.transform._pitch);
+      console.log(heightAdjustAmount);
+
       for (let y = 0; y < windowHeight; y++) {
         for (let x = 0; x < windowWidth; x++) {
           const index = (windowHeight - y) * windowWidth + x;
@@ -81,6 +84,8 @@ export default function getRegionElevation(map, appState, doneCallback) {
           //  console.log(x, y, dist, height, newheight);
           // }
           // height = newheight;
+          let heightDiff = height - (height * ((windowHeight-y)/windowHeight));
+          height = height - heightDiff * heightAdjustAmount;
           allHeights[index] = height;
           if (height < minHeight) minHeight = height;
           if (height > maxHeight) {

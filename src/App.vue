@@ -22,7 +22,7 @@
           <div class='row'>
             <div class='col'>Height scale</div>
             <div class='col c-2'>
-              <input type='range' min='10' max='256' step='1' v-model='heightScale'> 
+              <input type='range' min='10' max='1024' step='1' v-model='heightScale'>
               <input type='number' :step='1' v-model='heightScale'  autocomplete='off' autocorrect='off' autocapitalize="off" spellcheck="false" min='10' max='256'>
             </div>
           </div>
@@ -64,7 +64,7 @@
             <div class='row'>
               <div class='col'>Ocean level</div>
               <div class='col c-2'>
-                <input type='range' min='-20' max='500' step='1' v-model='oceanLevel'>
+                <input type='range' min='-20' max='100000' step='1' v-model='oceanLevel'>
                 <input type='number' :step='1' v-model='oceanLevel' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' max='500' min='-20'>
               </div>
             </div>
