@@ -39,8 +39,8 @@ export default function createHeightMapRenderer(appState, regionInfo, canvas) {
     let lineWidth = Number.parseFloat(appState.lineWidth);
 
     let resHeight = regionInfo.windowHeight;
-    let resWidth = window.innerWidth;
-    let rowCount = Math.round(resHeight * appState.lineDensity / 100); 
+    let resWidth = regionInfo.windowWidth;
+    let rowCount = Math.round(resHeight * appState.lineDensity / 100);
     let scale = appState.heightScale;
 
     // since tiles can be partially overlapped, we use our own iterator
@@ -58,18 +58,18 @@ export default function createHeightMapRenderer(appState, regionInfo, canvas) {
     // When rendered to SVG - count the filled area, so that we can break paths
     // if they overlap already rendered paths
     let columnHeights;
-    trueWindowHeight = window.innerHeight;
+    trueWindowHeight = resHeight;
 
     if (settings && settings.svg) {
       // SVG needs hex values, not rgba, also ignore alpha
       lineStroke = getColor(appState.lineColor, /* useHex = */ true);
-      columnHeights = new Float32Array(window.innerWidth);
+      columnHeights = new Float32Array(resWidth);
       lastRow = iteratorSettings.stop;
       // This is going to be our look up structure. Point `(x, y)` is visible
       // only if its `y` coordinate is smaller than `columnHeight[x]` value.
       // (we render from bottom to top for svg files)
-      for (let x = 0; x < window.innerWidth; ++x) {
-        columnHeights[x] = trueWindowHeight; 
+      for (let x = 0; x < resWidth; ++x) {
+        columnHeights[x] = trueWindowHeight;
       }
       return renderSVGRows(settings);
     } else {
@@ -80,11 +80,11 @@ export default function createHeightMapRenderer(appState, regionInfo, canvas) {
     // Public part is over. Below is is just implementation detail
 
     function renderSVGRows(settings) {
-      let svg = createSVGContext(window.innerWidth, window.innerHeight); // || ctx - they both work here.
+      let svg = createSVGContext(resWidth, window.innerHeight); // || ctx - they both work here.
       let row = 0;
-      let width = window.innerWidth;
+      let width = resWidth;
       svg.fillStyle = getColor(appState.backgroundColor, /* useHex = */ true);
-      svg.fillRect(0, 0, window.innerWidth, window.innerHeight);
+      svg.fillRect(0, 0, resWidth, window.innerHeight);
 
       for (let y = lastRow; y > 0; y -= iteratorSettings.step) {
         drawSVGLine(lastLine, svg);
@@ -130,7 +130,7 @@ export default function createHeightMapRenderer(appState, regionInfo, canvas) {
         drawPolyLine(lastLine, true);
         lastLine = [];
 
-        for (let x = 0; x < window.innerWidth; ++x) {
+        for (let x = 0; x < resWidth; ++x) {
           let height = regionInfo.getHeightAtPoint(x, y);
           let fY = y - Math.floor(scale * (height - minHeight) / heightRange);
 
@@ -158,8 +158,6 @@ export default function createHeightMapRenderer(appState, regionInfo, canvas) {
     /**
      * Draws a polyline, that does not intersect already rendered
      * lines. Assumption is that we render from bottom to the top.
-     * 
-     * 
      */
     function drawSVGLine(points, svg) {
       if (points.length < 3) return;

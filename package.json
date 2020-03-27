@@ -12,7 +12,7 @@
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^2.3.0",
     "@mapbox/tilebelt": "^1.0.1",
-    "mapbox-gl": "^1.6.0",
+    "mapbox-gl": "^1.9.0",
     "point-in-polygon": "^1.0.1",
     "tinycolor2": "^1.4.1",
     "vue": "^2.5.2",

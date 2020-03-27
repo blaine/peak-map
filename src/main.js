@@ -37,10 +37,31 @@ function init() {
     trackResize: false,
     container: "map",
     minZoom: 0,
-    style: "mapbox://styles/mapbox/light-v10",
+    style: {
+      'version': 8,
+      'sources': {
+      'raster-tiles': {
+      'type': 'raster',
+      'tiles': [
+        'https://api.mapbox.com/v4/mapbox.terrain-rgb/{z}/{x}/{y}@2x.pngraw?access_token=pk.eyJ1IjoiYmxhaW5lY29vayIsImEiOiJjazc0N2dldGIwa3hoM2ZwbjFwNmNjYnV5In0.FW5NzPckRTMvvtgR0Fosxw'
+      ],
+      'tileSize': 512,
+    }
+  },
+  'layers': [
+    {
+      'id': 'simple-tiles',
+      'type': 'raster',
+      'source': 'raster-tiles',
+      'minzoom': 0,
+      'maxzoom': 22
+    }
+  ]
+  }, //"mapbox://styles/mapbox/light-v10",
     center: [-122.574, 47.727],
     zoom: 7.68,
-    hash: true
+    hash: true,
+    preserveDrawingBuffer: true
   });
 
   map.addControl(
@@ -118,7 +139,7 @@ function updateMap() {
   } else {
     heightMapCanvas.style.display = "";
   }
-  
+
   appState.renderProgress = {
     message: '',
     isCancelled: false,
